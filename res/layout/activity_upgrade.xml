@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context="batfai.samuentropy.brainboard7.UpgradeActivity"
+    android:orientation="vertical"
+    android:background="@drawable/beam_green">
+
+    <fragment android:name="batfai.samuentropy.brainboard7.UpgradeDetailsFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:id="@+id/upgrade_fragment_details"
+        />
+
+    <fragment android:name="batfai.samuentropy.brainboard7.UpgradeListFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:id="@+id/upgrade_fragment_list"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>

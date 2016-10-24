@@ -1,0 +1,350 @@
+package batfai.samuentropy.brainboard7;
+
+import android.content.Intent;
+import android.database.CursorIndexOutOfBoundsException;
+import android.database.sqlite.SQLiteDatabaseLockedException;
+import android.database.sqlite.SQLiteException;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import batfai.samuentropy.brainboard7.Database.Database;
+import batfai.samuentropy.brainboard7.Sound.BackgroundMusic;
+
+class Node{
+    public int X, Y;
+
+    public Node(int X, int Y){
+        this.X = X;
+        this.Y = Y;
+    }
+}
+
+public class UpgradeActivity extends android.app.Activity  {
+
+    UpgradeListFragment upgradeListFragment;
+    UpgradeDetailsFragment upgradeDetailsFragment;
+
+
+
+    private BackgroundMusic backgroundMusic;
+
+    Database database;
+
+    Button increaseButton, decreaseButton;
+
+    MediaPlayer player;
+
+    boolean saveUpgrades = false;
+
+    private final int TOTAL_NODES = 7;
+
+    private Map<String, Integer> Nodes = new HashMap<String, Integer>();
+
+
+    private List<ArrayList<Node>> addedNodes = new ArrayList<ArrayList<Node>>();
+
+
+    private boolean getDatabaseData(){
+
+        try {
+            database.getResult("SELECT * FROM positions");
+        }
+        catch(SQLiteDatabaseLockedException e){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onCreate(android.os.Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_upgrade);
+
+        for(int i = 0; i < TOTAL_NODES; i++){
+            addedNodes.add(new ArrayList<Node>());
+        }
+
+        if (Nodes.size() == 0) {
+            Nodes.put("nandironproci", 0);
+            Nodes.put("nandironproci2", 1);
+            Nodes.put("matyironproci", 2);
+            Nodes.put("matyironproci2", 3);
+            Nodes.put("gretironproci2", 4);
+            Nodes.put("gretironproci", 5);
+            Nodes.put("buildproci", 6);
+        }
+
+        database = new Database(this);
+
+        int xCoord, yCoord;
+        int index;
+
+
+        upgradeDetailsFragment = (UpgradeDetailsFragment) getFragmentManager().findFragmentById(R.id.upgrade_fragment_details);
+        upgradeListFragment = (UpgradeListFragment) getFragmentManager().findFragmentById(R.id.upgrade_fragment_list);
+
+        upgradeDetailsFragment.getDecreaseButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveUpgrades = true;
+
+                try {
+                    addedNodes.get(Nodes.get(upgradeDetailsFragment.getName())).remove(addedNodes.get(Nodes.get(upgradeDetailsFragment.getName())).size() - 1);
+                    upgradeDetailsFragment.setCount(upgradeDetailsFragment.getCount() - 1);
+                }
+                catch(IndexOutOfBoundsException e){
+                    Toast.makeText(UpgradeActivity.this, "You already have 0 of these!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        upgradeDetailsFragment.getIncreaseButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveUpgrades = true;
+
+                addedNodes.get(Nodes.get(upgradeDetailsFragment.getName())).add(new Node(0,0));
+
+                upgradeDetailsFragment.setCount(upgradeDetailsFragment.getCount() + 1);
+            }
+        });
+
+        upgradeDetailsFragment.getClearButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveUpgrades = true;
+                addedNodes.get(Nodes.get(upgradeDetailsFragment.getName())).clear();
+                upgradeDetailsFragment.setCount(addedNodes.get(Nodes.get(upgradeDetailsFragment.getName())).size()); // To avoid bugs (the user can see if there was a bug and the number didn't decrease to 0)
+            }
+        });
+
+        upgradeDetailsFragment.getDecreaseButton().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(UpgradeActivity.this, "Decrease the number of nodes.", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        upgradeDetailsFragment.getIncreaseButton().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(UpgradeActivity.this, "Increase the number of nodes.", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        upgradeDetailsFragment.getClearButton().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(UpgradeActivity.this, "Delete all nodes of this type.", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        try {
+            database.getResult("SELECT * FROM positions");
+        }
+        catch(SQLiteDatabaseLockedException e){
+            boolean locked = true;
+            Log.d("gery", "Database was locked in upgradeactivity");
+            Log.d("gery", e.getMessage());
+            Toast.makeText(this, "Database operations still pending, please wait.", Toast.LENGTH_SHORT).show();
+            while(locked){
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if(getDatabaseData()){
+                    locked = false;
+                }
+
+            }
+
+
+            Log.d("gery", "Database was unlocked in upgradeactivity");
+
+        }
+        catch(SQLiteException e){
+            Log.d("gery", "sqliteexception in upgradeactivity");
+            Log.d("gery", e.getMessage());
+
+            boolean locked = true;
+
+            while(locked){
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                locked = false;
+                try{
+                    database.getResult("SELECT * FROM positions");
+                }
+                catch(SQLiteException ex){
+                    locked = true;
+                }
+            }
+        }
+
+
+        try{
+
+            while(database.getLastResult().moveToNext()){
+                xCoord = database.getLastResult().getInt(database.getLastResult().getColumnIndex("X"));
+                yCoord = database.getLastResult().getInt(database.getLastResult().getColumnIndex("Y"));
+                index = database.getLastResult().getInt(database.getLastResult().getColumnIndex("type"));
+                //Log.d("gery", "adding node in upgradeactivity");
+                addedNodes.get(index).add(new Node(xCoord, yCoord));
+            }
+        }
+        catch(CursorIndexOutOfBoundsException e){
+            Log.d("gery", "The table was empty in upgrade activity.");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            try{
+
+
+                while(database.getLastResult().moveToNext()){
+                    xCoord = database.getLastResult().getInt(database.getLastResult().getColumnIndex("X"));
+                    yCoord = database.getLastResult().getInt(database.getLastResult().getColumnIndex("Y"));
+                    index = database.getLastResult().getInt(database.getLastResult().getColumnIndex("type"));
+
+                    addedNodes.get(index).add(new Node(xCoord, yCoord));
+                }
+
+            }
+            catch(CursorIndexOutOfBoundsException ex){
+            }
+
+
+        }
+
+
+        upgradeDetailsFragment.setItem("nandironproci");
+        upgradeDetailsFragment.setCount(addedNodes.get(Nodes.get("nandironproci")).size());
+
+
+        ArrayList<String> options = new ArrayList<String>();
+        options.add("nandironproci");
+        options.add("nandironproci2");
+        options.add("matyironproci");
+        options.add("matyironproci2");
+        options.add("gretironproci");
+        options.add("gretironproci2");
+
+
+
+
+        upgradeListFragment.setOptions(options);
+
+        upgradeListFragment.getOptionList().setAdapter(new ArrayAdapter<String>(this,  android.R.layout.simple_list_item_1, options));
+
+        upgradeListFragment.setOnItemChangedListener(new UpgradeListFragment.OnItemChangedListener() {
+            @Override
+            public void onItemChanged(String newItem) {
+                upgradeDetailsFragment.setItem(newItem);
+                upgradeDetailsFragment.setCount(addedNodes.get(Nodes.get(newItem)).size());
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        player = MediaPlayer.create(this, R.raw.space);
+        player.setLooping(true);
+
+        player.start();
+
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                player.release();
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        player.stop();
+        player.release();
+
+        if(saveUpgrades){
+
+            new AsyncTask<Void, Void, Void>(){
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    Toast.makeText(UpgradeActivity.this, "Saving data...", Toast.LENGTH_SHORT).show();
+
+
+
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                }
+
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    saveData();
+
+
+                    return null;
+                }
+            }.execute();
+
+
+        }
+
+
+    }
+
+    private void saveData(){
+        database.getWritableDatabase().execSQL("DROP TABLE positions");
+        database.getWritableDatabase().execSQL(String.format("CREATE TABLE positions(ID INTEGER PRIMARY KEY NOT NULL, X INTEGER, Y INTEGER, type INTEGER)"));
+        for(int i = 0; i < addedNodes.size(); i++){
+            for(Node node : addedNodes.get(i)){
+                database.getWritableDatabase().execSQL(String.format("INSERT INTO positions (X, Y, type) VALUES (%d, %d, %d)", node.X, node.Y, i));
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new android.content.Intent();
+
+        intent.setClass(UpgradeActivity.this, NeuronGameActivity.class);
+        intent.setFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("LOAD_NODES", true);
+        startActivity(intent);
+
+        finish();
+    }
+}
