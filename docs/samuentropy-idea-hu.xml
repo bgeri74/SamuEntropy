@@ -3,7 +3,7 @@
       xmlns:xlink="http://www.w3.org/1999/xlink"
       xmlns:xi="http://www.w3.org/2001/XInclude">    
     <info>
-        <title>Entrópia Samu</title>
+        <title>Entrópia Samu Programozói Kézikönyv</title>
         <subtitle>ESPORT ÉS MESTERSÉGES INTELLIGENCIA</subtitle>
         <titleabbrev>ESAMU</titleabbrev>
         <authorgroup>
@@ -58,8 +58,30 @@
                     <email>besenczi.renato@inf.unideb.hu</email>
                 </address>
             </author>
+            <author>
+                <personname>
+                    <honorific>Mr.</honorific>
+                    <surname>Simkó</surname>
+                    <othername>Viktor</othername>                    
+                    <firstname>Szilárd</firstname>
+                </personname>    
+                <affiliation>
+                    <shortaffil>hallgató, DEIK PTI</shortaffil>
+                    <jobtitle>hallgató</jobtitle>
+                    <address>
+                        <email>aqviktor@gmail.com</email>
+                    </address>
+                </affiliation>
+                <address>
+                    <street>Cifrakapu</street>
+                    <city>Eger</city>
+                    <postcode>3300</postcode>
+                    <country>Magyarország</country>
+                    <email>aqviktor@gmail.com</email>
+                </address>
+            </author>
         </authorgroup>
-        <edition>ESAMU, Entrópia Samu, 2016. okt. 7, v. hu.0.0.11.3</edition>
+        <edition>ESAMU, Entrópia Samu, 2016. okt. 26, v. prog.guide.hu.0.0.11.11</edition>
         <pubdate>2016</pubdate>
         <copyright>
             <year>2016</year>
@@ -171,6 +193,14 @@
                 <authorinitials>rbesenczi</authorinitials>
                 <revremark>
                     Google Firebase rendszer licencmérnökségi feladat kifejtése.
+                </revremark>
+            </revision>
+            <revision>
+                <revnumber>hu.0.0.11.7</revnumber>
+                <date>2016-10-19</date>
+                <authorinitials>viktorsimko</authorinitials>
+                <revremark>
+                    Google Firebase-t használó gyors prototípus linkelése.
                 </revremark>
             </revision>
             <!--

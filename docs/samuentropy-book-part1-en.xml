@@ -1,0 +1,1671 @@
+<part xmlns="http://docbook.org/ns/docbook" version="5.1" xml:lang="en"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Programming of the present</title>
+    <partintro>
+        <para>
+          Programming and Linux are two good friends, begin with installing Linux on your PC, with the help of your mentor!
+        </para>
+    </partintro>
+    <chapter>
+        <info>
+            <title>Introduction</title>
+            <keywordset>
+                <keyword>GNU/Linux</keyword>
+            </keywordset>
+        </info>
+        <section>
+            <title>Good beginning</title>
+            <para>
+              If you alreay have Linux on your PC then you can read further, if you don't then scroll back!
+            </para>
+            <section>
+                <title>The first day &#x2013; <literal>Hello, World!</literal></title>
+                <para>
+                    We begin with this <systemitem class="systemname">C++</systemitem> source code (which was for example given to Gréta in the
+                    <filename>greta1.cpp</filename> file).
+                </para>
+                <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}
+]]>
+                </programlisting>
+
+                <section>
+                    <title>Dad &#x2013; mentor</title>
+                    <para>
+                        It is true for the programmer, too, that generally he/she stands on the shoulders of giants <footnote>
+                            <para> The great scientist, Isaac Newton wrote this (in his letter written to Robert Hook) to express that he could also build upon the work of others:
+                                "If I have seen further it is by standing on the sholders of Giants".
+                            </para>
+                        </footnote>, in other words, he or she reuses other programmers' programs.
+                        The <code>#include</code> command does exactly this, it pastes the
+                        <code>iostream</code> programs written by others. In this <code>iostream</code> there are programs that materialize the channels. For example your program will have a channel<footnote>
+                            <para>Where does this channel come from? On your machine (or for example on your phone or even on your tablet) there is a special program, called
+                                the operating system, the Linux kernel, which Linus Torvalds started to write when he was on a university in Finnland.  The operating
+                                system is a good friend of the programmer, this program guarantees fro example these channels, too.
+                            </para>
+                        </footnote>, whereto your program sends the letters, and these letters will be displayed on the screen.
+                    </para>
+                    <para>
+                        The basic foundation of a <systemitem class="systemname">C++</systemitem> program is the function, this has a first line,
+                        which is now the <code>int main()</code> line. This is made of three parts: it tells what the function will calculate: this is now
+                        a number, the <type>int</type> keyword means this. The second part is the name of the function, this in our case is
+                        <code>main</code>. The third part is written between parantheses: the function receives what is here, it has to calculate from these
+                        . In our case this part is empty, in other words we didn't give the function anything as an input.
+                    </para>
+                    <para>
+                        The body of the function is the block, which is a list of commands written between curly braces. Every command ends with a semicolon.
+                        We have now two commands. The first one is the one called <varname>std::cout</varname> which prints the
+                        <literal>"Hello, Vilag!"</literal> text to output channel. The input part of this channel is in our program and the output part is opened to the screen.
+                        Then we print a special signal, which makes the cursor jump to a new line on the screen.
+                    </para>
+                    <para>
+                        The second command is the <code>return</code> which gives back the value calculated by the function to the caller of the function.
+                        We didn't calculate anything now, only printed to the screen, so we returned 0. This means by convention that everything was okay with the program,
+                        because the caller of your <function>main</function> function was the operating system itself,
+                        the kernel of the Linux, the program indicates that it didn't have any problems.
+                        With this, the <function>main</function> function ended and with that our program finished.
+                    </para>
+                    <para>
+                        Now let us try out the program!
+                    </para>
+                    <para>
+                        First, we translate the source code so that the processor of our machine understands it.
+                        We save this translation in the greta1 file with the <application>g++</application> compiler. Then by writing its name after the dot slash
+                        we run the compiled program. Running a program is the process when the processor reads the compiled program.
+                    </para>
+                    <para>
+                        What happened after pressing enter after typing dot slash and the filename? The main function was executed, which printed
+                        the Hello, World! text to the output channel, which was therefore displayed on the screen.
+                    </para>
+                    <screen>
+<![CDATA[$ g++ greta1.cpp -o greta1
+$ ./greta1
+Hello, World!
+$
+]]>
+                    </screen>
+                    <important>
+                        <title>The language of the processor</title>
+                        <para>
+                            The machines do not understand the various <systemitem class="systemname">C++</systemitem> source codes,
+                            but the <systemitem class="systemname">C++</systemitem> programmers do!
+                            The source code must be compiled to the processor's own language. This is executed by the <application>g++</application>compiler program
+                            <footnote>
+                                <para> The g++ compiler was written by a famous programmer who has a well-known hacker name: RMS, in other words Richard Matthew Stallman.
+                                  If in your dreams you found yourself in the world of The Lord of The Rings as Frodo, then he will be Gandalf. :)
+                                </para>
+                            </footnote>. You don't have to worry, the <application>g++</application> program is already on your computer, it has been helping the Linux since a very long time!
+                        </para>
+                        <para>
+                            Your mentor can show you what the language that your processor understands actually looks like: it is made of numbers. Here is for example the runnable code
+                            compiled from you first program:
+                        </para>
+                        <screen>
+<![CDATA[$ hexdump -v -e '/1 "%02X "'  greta1 | more
+7F 45 4C 46 02 01 01 00 00 00 00 00 00 00 00 00 02 00 3E 00 01 00 00 00 50 07 40 00 00 00 00 00 40 00 00 00 00 00 00 00 40 1C 00 00 00 00 00 00 00 00 00 00 40 00 38
+00 09 00 40 00 1F 00 1C 00 06 00 00 00 05 00 00 00 40 00 00 00 00 00 00 00 40 00 40 00 00 00 00 00 40 00 40 00 00 00 00 00 F8 01 00 00 00 00 00 00 F8 01 00 00 00 00
+00 00 08 00 00 00 00 00 00 00 03 00 00 00 04 00 00 00 38 02 00 00 00 00 00 00 38...]]>
+                        </screen>
+                        <para>
+                            ... because this continues on more displays! You can see that the language of your processor is not understandable for the <systemitem class="systemname">C++</systemitem> programmers.
+                        </para>
+                    </important>
+                    <important>
+                        <title>The programmer manual of Linux</title>
+                        <para>
+                            Previously we saw the contents of the <filename>greta1</filename> file with the <command>hexdump</command> command:
+                            <code><![CDATA[$ hexdump -v -e '/1 "%02X "'  greta1 | more]]></code> but don't think that I can write these things immediately!
+                            Simply I just check them in the manual.
+                        </para>
+                        <para>
+                            In the world of C programming, it is even more of a daily routine to check what you have to use in the manual and see how you can make it work!
+                            This is a written profession, it was not given to us by God, it was invented by engineers, this is the simple truth: you only have to read it.
+                            For example take a look at what the manual says about the <varname>std::cout</varname> object:
+                        </para>
+                        <screen>
+<![CDATA[std::cout(3)                   C++ Programmer's Manual                   std::cout(3)
+
+
+
+NAME
+       std::cout - Standard output stream
+
+TYPE
+       object
+
+SYNOPSIS
+       #include <iostream>
+
+       extern ostream cout;
+
+DESCRIPTION
+       Object of class ostream that represents the standard output stream oriented
+       to narrow characters (of type char). It corresponds to the C stream stdout.
+       ...
+]]>
+                        </screen>
+                    </important>
+                </section>
+                <section>
+                    <title>Gréta</title>
+                    <para>
+                        The processor counts numbers and prints the letters to the
+                        <varname>std::cout</varname> .
+                        The <application>g++</application> compiles
+                        the program. The iostream is a channel. The <code>#include</code> pastes others' code into yours. The 0 means that
+                        your program executed successfully.
+                    </para>
+                </section>
+                <section>
+                    <title>Nándi</title>
+                    <para>
+                        The <application>g++</application> translates to the processor's language.
+                        The <code>#include</code> is a command, which tells the computer to copy other's code into yours.
+                        The <varname>cout</varname> is a channel for letters to cross it.
+                        The <code><![CDATA[<<]]></code> means that push the letters in this direction. The 0 means that the main function was executed properly.
+                    </para>
+                </section>
+                <section>
+                    <title>Matyi</title>
+                    <para>
+                        The <code>#include</code> is the first command.
+                        With the <code>#include</code> we paste into other programs.
+                        The <varname>iostream</varname> is a channel.
+                        The <code>int main</code> is the main function.
+                        The main function is called by the operating system.
+                        The function means that it is a building block of the program.
+                        <code><![CDATA[std::cout << Hello World << std::endl]]></code>
+                        This means that we print the letters to the channel.
+                        The <constant>std::endl</constant> means that the cursor goes to the next line.
+                        The <code>return</code> returns a number to the caller of the function.
+                        The <code>return 0;</code> means that the program finished successfully.
+                    </para>
+                </section>
+            </section>
+            <section>
+                <title>Second day &#x2013; for loop</title>
+                <para>
+                    We improve our first program, so that we can get this second one:
+                </para>
+                <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    for(int i=0; i<3; ++i)
+        std::cout << i << std::endl;
+    return 0;
+}
+]]>
+                </programlisting>
+                <section>
+                    <title>Dad &#x2013; mentor</title>
+                    <para>
+                        With the <code>for</code> statement we can repeat things, in other words we can make iterations in our program. The iteration means that
+                        we execute something (the thing that we iterate) over an over again, multiple times (it can even be 0: 0 or infinite).
+                    </para>
+                    <para>
+                        Generally, a for loop looks like this <code>for(starting point; how many times; ending point) {we iterate what is here}</code>.
+                    </para>
+                    <para>
+                        In the second source we iterate a whole number <code>int i</code> starting from the value of <code>i=0</code> (initialising) and we continue until it is true that
+                        <code><![CDATA[i<3]]></code>, so the i variable takes on the values 0, 1 and 2, printing them in this order.
+                    </para>
+                </section>
+                <section>
+                    <title>Gréta</title>
+                    <para>
+                        The for is a loop. The for starts from i=0 and iterates while <code><![CDATA[i<3]]></code> is true.
+                    </para>
+                </section>
+                <section>
+                    <title>Nándi</title>
+                    <para>
+                        The for repeats the loop. The for is a loop. What does a loop mean? Do one push-up then 10 push-ups. The 10 push-ups are a loop from 1 to 10.
+                    </para>
+                </section>
+                <section>
+                    <title>Matyi</title>
+                    <para>
+                        The for is a loop. It is a loop because it executes the program multiple times.
+                        The ++i means that we increase the value of i by 1. For example if i equals 1 then
+                        <orderedlist numeration="arabic">
+                            <listitem>
+                                <para>
+                                    ++i=2
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    ++i=3
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    ++i=4.
+                                </para>
+                            </listitem>
+                        </orderedlist>
+                        If there was a curly brace next to the for statement then there would be more commands.
+                        The i=0 is where the iteration starts, the <code><![CDATA[i<3]]></code> shows how long it will iterate and the ++i shows by how many it increases on every iteration.
+                    </para>
+                </section>
+                <section>
+                    <title>Task</title>
+                    <para>
+                        Modify the second program to write the
+                         <literal>Hello, World!</literal> text to the screen 4 times! The chilren gave the following solutions in the following order.
+                    </para>
+                    <section>
+                        <title>Nándi</title>
+                        <para>
+                            He took the first program as a starting point generally instead of the second one because he deleted the for loop from the second,
+                            then he place a  <literal>Hello, World!</literal> text, indenting it with tabulators.
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+                  Hello World!
+    return 0;
+}
+]]>
+                        </programlisting>
+                        <para>
+                            With this, he got the following error.
+                        </para>
+                        <screen>
+<![CDATA[$ g++ nandi2.cpp -o nandi2
+nandi2.cpp: In function ‘int main()’:
+nandi2.cpp:6:19: error: ‘Hello’ was not declared in this scope
+                   Hello World!]]>
+                        </screen>
+                        <para>
+                            The compiler tried to identify the text as a part of the code because it was not between apostrophes, but it did not succeed.
+                            Although on his next try his program compiled successfully,
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+                 "Hello World!";
+    return 0;
+}
+]]>
+                        </programlisting>
+                        <para>
+                            his program didn't do anything. The next change was this:
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    std::cout << "Hello World!";
+    return 0;
+}
+]]>
+                        </programlisting>
+                        <para>
+                            Then this, to print 4 <literal>Hello World!</literal>
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    std::cout << "Hello World!";
+    std::cout << "Hello World!";
+    std::cout << "Hello World!";
+    return 0;
+}]]>
+                        </programlisting>
+                        <para>
+                            and finally to start printing in new lines:
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    std::cout << "Hello World!" << std::endl;
+    std::cout << "Hello World!" << std::endl;
+    std::cout << "Hello World!" << std::endl;
+    return 0;
+}]]>
+
+                        </programlisting>
+                    </section>
+                    <section>
+                        <title>Matyi</title>
+                        <para>
+                            He started from program 2, first he modified the bound of the loop from 3 to 4 and he wrote <varname>i</varname> instead of <literal>Hello, World!</literal>.
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    for(int i=0; i<4; ++i)
+        std::cout << Hello World! << std::endl;;
+    return 0;
+}]]>
+                        </programlisting>
+                        <para>
+                            He got this error (earlier seen at Nándi already)
+                        </para>
+                        <screen>
+<![CDATA[$ g++ matyi2.cpp -o matyi2
+matyi2.cpp: In function ‘int main()’:
+matyi2.cpp:7:22: error: ‘Hello’ was not declared in this scope
+         std::cout << Hello World! << std::endl;
+]]>
+                        </screen>
+                        <para>
+                            He wrote back i into the printing and deleted the incrementation of the loop variable:
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    for(int i=0; i<3; )
+        std::cout << i << std::endl;
+    return 0;
+}]]>
+                        </programlisting>
+
+                        <para>
+                            So his program ran into an infinite loop at runtime... <literal>Hello, World!</literal> lines were just running in the terminal window<footnote>
+                                <para>After iteration of the core of the loop, deleting the incrementation of i, i will stay 0 and will never reach 3, so the iteration of the core of the loop will never end. This is certainly an infinite loop!
+                                </para>
+                            </footnote>, in the end only closing the window helped!
+
+                        </para>
+                        <note>
+                            <title>In the report of Matyi</title>
+                            <para>
+                                If from 1 to 4 ++i, then writes four times: Hello World. If we don't put <code>++i</code> there, things will happen just like with me, executing Hello World in an infinite loop.
+                            </para>
+                        </note>
+                        <para>
+                            After putting incrementation of loop variable back, he got a good solution:
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    for(int i=0; i<3; ++i)
+        std::cout << "Hello World!" << std::endl;
+    return 0;
+}]]>
+                        </programlisting>
+
+
+                    </section>
+                    <section>
+                        <title>Gréta</title>
+                        <para>
+                            First she started with program 2 too and incremented to 1 the beginning value of the loop variable
+                        </para>
+
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    for(int i=1; i<3; ++i)
+        std::cout << i << std::endl;;
+    return 0;
+}]]>
+                        </programlisting>
+                        <para>
+                            then compiling and running essentially she returned back to hacking her program 1 in her puzzlement, since she deleted the loop and after the words Hello World she wrote a number 4:
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!"4 << std::endl;
+
+    return 0;
+}
+]]>
+                        </programlisting>
+                        <para>
+                            that she got this error to:<footnote>
+                                <para>The text of compilation error (after the "error:") often helps at finding the syntax error, however sometimes this is not the case... Now the letter one is the case. With time your routine will be formed and you will immediately see that that 4 has nothing to do there.
+                                </para>
+                            </footnote>
+                        </para>
+                        <screen>
+<![CDATA[$ g++ greta2.cpp -o greta2
+greta2.cpp: In function ‘int main()’:
+greta2.cpp:5:32: error: expected ‘;’ before numeric constant
+     std::cout << "Hello World!"4 << std::endl;]]>
+                        </screen>
+                        <para>
+                            correcting this, she was trying with this
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    std::cout << std::endl;
+    return 0;
+}]]>
+                        </programlisting>
+                        <para>
+                            that was already compiling and running, still wrong though:
+                        </para>
+                        <screen>
+<![CDATA[$ g++ greta2.cpp -o greta2
+$ ./greta2
+Hello World!
+
+nbatfai@robopsy:~$]]>
+                        </screen>
+                        <para>
+                            and that was followed by a good solution:
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    std::cout << "Hello World!" << std::endl;
+    std::cout << "Hello World!" << std::endl;
+    std::cout << "Hello World!" << std::endl;
+    return 0;
+}
+]]>
+                        </programlisting>
+
+                    </section>
+
+
+                </section>
+
+
+
+            </section>
+
+            <section>
+                <title>Third day &#x2013; multiplication table</title>
+                <para>
+                    The children solved a task: let's modify the program 2 so that it prints the 7 times table, i.e. we must reach this output:
+                    <screen>
+<![CDATA[1 * 7 = 7
+2 * 7 = 14
+3 * 7 = 21
+.
+.
+.
+10 * 7 = 70
+]]>
+                    </screen>
+                </para>
+                <section>
+                    <title>Dad &#x2013; mentor</title>
+                    <para>
+                        On paper we discussed briefly that the first number changes just like the for loop variable i, the other number is always 7, in turn. We can define the latter one for example as <code>int m = 7;</code>. We talked over the printing separately, that the first number is always i, the second one is m, the third one is the multiplication of the two, i.e. later at the computer we can write something like this: <code><![CDATA[cout << i << "*" << m << i*m << endl;]]></code>.
+                    </para>
+                </section>
+                <section>
+                    <title>Gréta</title>
+                    <para>
+
+                    </para>
+                </section>
+                <section>
+                    <title>Nándi</title>
+                    <para>
+                        The task from yesterday started from Matyi's for-like solution, it was gone fast
+                    </para>
+                    <programlisting language="C++">
+<![CDATA[include <iostream>
+
+int main()
+{
+    int m =7;
+    std::cout << "Nandi multiplication table" << std::endl;
+    for(long int i=1; i<4; ++i)
+        std::cout <<i <<" * "<<m <<" = " <<i*m<< std::endl;
+
+    return 0;
+}]]>
+                    </programlisting>
+                    <para>
+                        it was only needed to modify the upper bound of the loop to the right solution.
+                    </para>
+                    <programlisting language="C++">
+<![CDATA[include <iostream>
+
+int main()
+{
+    int m =7;
+    std::cout << "Nandi multiplication table" << std::endl;
+    for(long int i=1; i<11; ++i)
+        std::cout <<i <<" * "<<m <<" = " <<i*m<< std::endl;
+
+    return 0;
+}]]>
+                    </programlisting>
+                    <screen>
+<![CDATA[$ ./nandi2
+Nandi multiplication table
+1 * 7 = 7
+2 * 7 = 14
+3 * 7 = 21
+4 * 7 = 28
+5 * 7 = 35
+6 * 7 = 42
+7 * 7 = 49
+8 * 7 = 56
+9 * 7 = 63
+10 * 7 = 70
+]]>
+                    </screen>
+                    <para>
+                        Nándi got an inkling of how stuff is going, he made the maximum of the task: he printed the times table to 10000, then he wanted to tweak the for loop as:
+                    </para>
+                    <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    int m =7;
+    std::cout << "Nandi multiplication table" << std::endl;
+    for(long int i=1; i<0; ++i)
+        std::cout <<i <<" * "<<m <<" = " <<i*m<< std::endl;
+
+    return 0;
+}]]>
+                    </programlisting>
+                    <screen>
+<![CDATA[$ g++ nandi2.cpp -o nandi2
+$ ./nandi2
+Nandi multiplication table
+$
+]]>
+                    </screen>
+
+                </section>
+                <section>
+                    <title>Matyi</title>
+                    <para>
+                        After the undermentioned unsuccessul attempt
+                    </para>
+                    <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+    for(int i=1;m=7  i<4; ++i)
+        std::cout << i <<"*"<<m<<"=" <<i*m<< std::endl;
+    return 0;
+}]]>
+                    </programlisting>
+                    <para>
+                        independently from Nándi (they were just programming in different rooms) he reached the right result through the same way.
+                    </para>
+
+                </section>
+
+
+                <section>
+                    <title>Task</title>
+                    <para>
+                        Let's modify the program so that instead of the multiplication table it produces the first 10 square numbers! I.e. it gives the undermentioned output:
+                        <screen>
+<![CDATA[1 * 1 = 1
+2 * 2 = 4
+3 * 3 = 9
+.
+.
+.
+10 * 10 = 100
+]]>
+                        </screen>
+                    </para>
+                    <section>
+                        <title>Gréta</title>
+                        <para>
+
+                        </para>
+                    </section>
+                    <section>
+                        <title>Nándi</title>
+                        <para>
+                            He started very well:
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+    long int m =i;
+    std::cout << "Nandi multiplication table" << std::endl;
+    for(long int i=1; i<11; ++i)
+        std::cout <<i <<"*"<<m <<"=" <<i*m<< std::endl;
+    return 0;
+}
+]]>
+                        </programlisting>
+                        <screen>
+<![CDATA[nandi2.cpp:5:17: error: ‘i’ was not declared in this scope
+     long int m =i;  ]]>
+                        </screen>
+                        <para>
+                            after I warned him that at the place where he had written the statement <code>long int m =i;</code>, i is still not known because we only told later that it's a small number (int) which changes by the for loop, he came up with a solution.
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{
+
+    std::cout << "Nandi multiplication table" << std::endl;
+    for(long int i=1; i<11; ++i)
+    {
+        long int m =i;
+        std::cout <<i <<" * "<<m <<" = " <<i*m<< std::endl;
+    }
+    return 0;
+}
+]]>
+                        </programlisting>
+
+                    </section>
+                    <section>
+                        <title>Matyi</title>
+                        <para>
+                            Az <code>i*i</code> remek 5let, de nem kellett volna semmi más ezen túl
+                        </para>
+                        <programlisting language="C++">
+<![CDATA[#include <iostream>
+
+int main()
+{  int i=1<i<11;
+    std::cout << "MATYI SZORZOTABLA" << std::endl;
+    for(int i=1<;  i<11 ; ++i)
+        std::cout << i <<" * "<<i<<"=" <<i*i<< std::endl;
+    return 0;
+}]]>
+                        </programlisting>
+                        <para>
+                            mert ez így szintaktikailag hibás
+                        </para>
+                        <screen>
+<![CDATA[matyi2.cpp:6:17: error: expected primary-expression before ‘;’ token
+     for(int i=1<;  i<11 ; ++i)
+]]>
+                        </screen>
+                        <para>
+                            a for i ciklusváltozójába becsúszott egy felesleges karakter, illetve a
+                            <code><![CDATA[int i=1<i<11;]]></code> értelmezhetetlen a program szempontjából.
+                        </para>
+                        <para>
+                            Eztán a Nándinál már ismertetett irányba oldotta meg a feladatot, s Ő is kimaxolta ezt is a ciklus felső határának feltolásával.
+                            Ez egy idő után persze túlcsorduláshoz vezetett, amit abból éreztek gyanúsnak, hogy negatív számok jelentek meg a szorzatban.
+                        </para>
+                        <screen>
+<![CDATA[.
+.
+.
+46338 * 46338=2147210244
+46339 * 46339=2147302921
+46340 * 46340=2147395600
+46341 * 46341=-2147479015
+46342 * 46342=-2147386332
+46343 * 46343=-2147293647
+.
+.
+.
+]]>
+                        </screen>
+
+                    </section>
+
+                </section>
+
+            </section>
+
+            <section>
+                <title>Negyedik nap &#x2013; osztály</title>
+                <para>
+
+                </para>
+                <programlisting language="C++" linenumbering="numbered">
+<![CDATA[#include <iostream>
+
+class Katona
+{
+public:
+    std::string nev;
+    int elet;
+    int sebzes;
+
+    Katona(std::string nev, int elet, int sebzes) {
+
+        this->nev = nev;
+        this->elet = elet;
+        this->sebzes = sebzes;
+    }
+
+    bool el() {
+        return elet > 0;
+    }
+
+    friend std::ostream &operator<< (std::ostream &stream, Katona &katona) {
+        stream << katona.nev << " " << katona.elet << " " << katona.sebzes;
+        return stream;
+    }
+
+};
+
+
+Katona &harcol(Katona &egyik, Katona &masik)
+{
+    for (; egyik.el() && masik.el() ;) {
+        egyik.elet = egyik.elet - masik.sebzes;
+        masik.elet = masik.elet - egyik.sebzes;
+    }
+
+    if (egyik.elet > masik.elet)
+        return egyik;
+    else
+        return masik;
+}
+
+
+int main()
+{
+    Katona en {"Nandi", 100, 10};
+    Katona ellen {"Barbar", 80, 5};
+
+    std::cout << harcol(en, ellen) << std::endl;
+
+    return 0;
+}]]>
+                </programlisting>
+                <section>
+                    <title>Apa &#x2013; mentor</title>
+                    <para>
+
+                    </para>
+                    <screen>
+<![CDATA[$ g++ nandi4.cpp -o nandi4 -std=c++11
+$ ./nandi4
+Nandi 60 10
+]]>
+                    </screen>
+                </section>
+                <section>
+                    <title>Gréta</title>
+                    <para>
+
+                    </para>
+                </section>
+                <section>
+                    <title>Nándi</title>
+                    <para>
+
+                    </para>
+                </section>
+                <section>
+                    <title>Matyi</title>
+                    <para>
+                        A class az egy osztály. Az osztály az adatok és függvények csoportja.
+                        Milye van egy katonának? Élete, sebzése és neve.
+                    </para>
+                    <para>
+                        Mikor él egy katona? Amikor az élete több mint 0. Ezt az <function>el</function> függvény mondja el.
+                        Az <function>el</function> függvény visszaadja a hívójának, hogy igaz-e, hogy él-e a katona.
+                    </para>
+                    <para>
+                        Van több csatorna. Az egyik csatorna neve: iostream a másiknak ostream.
+                    </para>
+                    <para>
+                        Mennyi az élete és a sebzése egy katonának?
+                        Nándinak az élete 100 és a sebzése 10.
+                        A Barbárnak az élete 80 és a sebzése 5.
+                        Ezeket a konstruktornak adjuk mag.
+                        A konstruktorról akkor beszélünk ha az osztály és a függvény neve meggegyezik.
+                    </para>
+                    <para>
+                        A végén a győztes katona nevét kiírjuk a csatornára.
+                        A return visszaad egy számot az operációs rendszernek.
+                    </para>
+                </section>
+
+
+
+                <section>
+                    <title>Feladatok</title>
+                    <para>
+                        Itt már több feladatot adunk ki, úgy alakult, hogy ezeket közösen oldották meg a gyerekek (az első kettőt hárman egy gép előtt, de
+                        a másodikat már leginkább csak Matyi).
+                    </para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>
+                                Matyi fejben kiszámolta, még a futtatás előtt, hogy 60-at fog kiírni. Módosítsuk úgy a programot a
+                                <function>harcol</function> függvényben, hogy
+                                a harc minden lépésében nyomja ki a két katonát a képernyőre, azaz az alábbi futási eredmény legyen:
+                                <screen>
+<![CDATA[$ g++ nandi4.cpp -o nandi4 -std=c++11
+$ ./nandi4
+Nandi 95 10
+Barbar 70 5
+Nandi 90 10
+Barbar 60 5
+Nandi 85 10
+Barbar 50 5
+Nandi 80 10
+Barbar 40 5
+Nandi 75 10
+Barbar 30 5
+Nandi 70 10
+Barbar 20 5
+Nandi 65 10
+Barbar 10 5
+Nandi 60 10
+Barbar 0 5
+Nandi 60 10
+]]>
+                                </screen>
+                                A megoldás ez a kiegészítés volt a harcot definiáló <function>harcol</function> nevű függvényben:
+                                <programlisting language="C++">
+<![CDATA[Katona &harcol(Katona &egyik, Katona &masik)
+{
+    for (; egyik.el() && masik.el() ;) {
+        egyik.elet = egyik.elet - masik.sebzes;
+        masik.elet = masik.elet - egyik.sebzes;
+
+        std::cout << egyik << std::endl;
+        std::cout << masik << std::endl;
+    }
+
+    if (egyik.elet > masik.elet)
+        return egyik;
+    else
+        return masik;
+}
+]]>
+                                </programlisting>
+
+
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                Módosítsuk úgy az előző feladat megoldásának programját úgy, hogy a harc győztese után konstruáljunk meg egy harmadik
+                                katona objektumot ezekkel az adatokkal: <code><![CDATA[{"Orias", 180, 20}]]></code>
+                                és ez az új katona a győztessel
+                                harcoljon, azaz az alábbi futási eredmény legyen:
+                                <screen>
+<![CDATA[$ g++ nandi4.cpp -o nandi4 -std=c++11
+$ ./nandi4
+Nandi 95 10
+Barbar 70 5
+Nandi 90 10
+Barbar 60 5
+Nandi 85 10
+Barbar 50 5
+Nandi 80 10
+Barbar 40 5
+Nandi 75 10
+Barbar 30 5
+Nandi 70 10
+Barbar 20 5
+Nandi 65 10
+Barbar 10 5
+Nandi 60 10
+Barbar 0 5
+Nandi 60 10
+Nandi 40 10
+Orias 170 20
+Nandi 20 10
+Orias 160 20
+Nandi 0 10
+Orias 150 20
+Orias 150 20
+]]>
+                                </screen>
+                            </para>
+                            <para>
+                                Ez volt a gép melletti első próbálkozás a megoldásra, a main függvénybeli alábbi módosítás:
+                            </para>
+                            <programlisting language="C++">
+<![CDATA[int main()
+{
+    Katona en{"Nandi", 100, 10};
+    Katona ellen{"Barbar", 80, 5};
+    Katona giant{"Giant",180,20};
+
+    std::cout << harcol(en, ellen ,en,giant) << std::endl;
+
+    return 0;
+}]]>
+                            </programlisting>
+                            <para>
+                                ami egy jól is olvasható hibát adott, a fordító program pontosan megmondta mi ezzel a megoldási próbálkozással a gond: túl sok bemenő paramétert (too many arguments)
+                                adtunk meg
+                                a <function>harcol</function> nevű függvénynek
+                            </para>
+                            <screen>
+<![CDATA[$ g++ nandi4.cpp -o nandi4 -std=c++11
+nandi4.cpp: In function ‘int main()’:
+nandi4.cpp:57:44: error: too many arguments to function ‘Katona& harcol(Katona&, Katona&)’
+     std::cout << harcol(en, ellen ,en,giant) << std::endl;
+                                            ^
+nandi4.cpp:32:9: note: declared here
+ Katona& harcol(Katona& egyik, Katona& masik)
+         ^]]>
+                            </screen>
+                            <para>
+                                s valóban, hiszen a <function>harcol</function> fejét nézzük csak meg!
+                                <code><![CDATA[Katona &harcol(Katona &egyik, Katona &masik)]]></code>
+                                Két bemenő katonát vár és nem négyet (és visszaadja a harcban győző katonát).
+                                Ennek megfelelően ez volt a következő próbálkozás a main függvényben:
+                            </para>
+                            <programlisting language="C++">
+<![CDATA[    Katona en{"Nandi", 100, 10};
+    Katona ellen{"Barbar", 80, 5};
+    Katona giant{"Giant",180,20};
+    Katona gyoztas =harcol(en , ellen);
+    harcol(gyoztas,giant);
+
+    std::cout << harcol(en, ellen ) << std::endl;]]>
+                            </programlisting>
+                            <para>
+                                Ez már lefordul, majd lefut:
+                            </para>
+                            <screen>
+<![CDATA[$ ./nandi4
+Nandi 95 10
+Barbar 70 5
+Nandi 90 10
+Barbar 60 5
+Nandi 85 10
+Barbar 50 5
+Nandi 80 10
+Barbar 40 5
+Nandi 75 10
+Barbar 30 5
+Nandi 70 10
+Barbar 20 5
+Nandi 65 10
+Barbar 10 5
+Nandi 60 10
+Barbar 0 5
+Nandi 40 10
+Giant 170 20
+Nandi 20 10
+Giant 160 20
+Nandi 0 10
+Giant 150 20
+Nandi 60 10
+]]>
+                            </screen>
+                            <para>
+                                Ám ebben a kimenetben Matyi, az élesszemű észrevette, hogy valami nem stimmel.
+                                Jobban láthatja a kedves olvasó, ha <literal>-----------</literal>-el jelöljük benne a csatákat:
+                            </para>
+                            <screen>
+<![CDATA[$ ./nandi4
+Nandi 95 10
+Barbar 70 5
+Nandi 90 10
+Barbar 60 5
+Nandi 85 10
+Barbar 50 5
+Nandi 80 10
+Barbar 40 5
+Nandi 75 10
+Barbar 30 5
+Nandi 70 10
+Barbar 20 5
+Nandi 65 10
+Barbar 10 5
+Nandi 60 10
+Barbar 0 5
+-----------
+Nandi 40 10
+Giant 170 20
+Nandi 20 10
+Giant 160 20
+Nandi 0 10
+Giant 150 20
+-----------
+Nandi 60 10
+]]>
+                            </screen>
+                            <para>
+                                2 csata helyett 3 volt... erre a megoldásuk az utolsó kitörlése (pontosabban kommentbe tétele) volt
+                            </para>
+                            <note>
+                                <title>Másoló konstruktor<indexterm>
+                                        <primary>másoló konstruktor</primary>
+                                    </indexterm>
+                                </title>
+                                <para>
+                                    S történt itt még valami nagyon érdekes! Nézd meg az utolsó kimeneti sort: <literal>Nandi 60 10</literal>, hogy
+                                    lehet, hogy a <literal>Nandi</literal> elnevezésű katona élete 60, amikor előtte az óriással való harcban
+                                    már lement nullára...? Most ez misztikus kérdés kell legyen, de választ kapsz majd rá az 6. napon.
+                                </para>
+                            </note>
+
+                            <programlisting language="C++">
+<![CDATA[    Katona en{"Nandi", 100, 10};
+    Katona ellen{"Barbar", 80, 5};
+    Katona giant{"Giant",180,20};
+    Katona gyoztas =harcol(en , ellen);
+    harcol(gyoztas,giant);
+
+   //std::cout << harcol(en, ellen ) << std::endl;]]>
+                            </programlisting>
+                            <para>
+                                hogy a feladat kiírásában megkívánt megoldást kapják, ebben a 2. harcol hívást kinyomták a csatornára és elkészültek:
+                            </para>
+                            <programlisting language="C++">
+<![CDATA[    Katona en{"Nandi", 100, 10};
+    Katona ellen{"Barbar", 80, 5};
+    Katona giant{"Giant",180,20};
+    Katona gyoztas =harcol(en , ellen);
+    std::cout << harcol(gyoztas,giant ) << std::endl;]]>
+                            </programlisting>
+
+                            <para>
+                                ami már pont ugyanazt adja, amit kértem.
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                Próbáld ki, majd magyarázd meg ezt a forráskódot:
+                                <programlisting language="C++">
+<![CDATA[int main()
+{
+    Katona en {"Nandi", 100, 10};
+    Katona ellen {"Barbar", 80, 5};
+    Katona harmadik {"Orias", 180, 20};
+
+    std::cout << harcol(harcol(en, ellen), harmadik) << std::endl;
+
+    return 0;
+}]]>
+                                </programlisting>
+                            </para>
+                            <para>
+                                Papíron próbáltak meg választ adni, amit Matyi ügyesen így fogalmazott meg: TODO: saját szavaival amikor azt mondta, hogy a
+                                két csata rövidített leírása.
+                            </para>
+                            <para>
+                                A megértést ellenőrző feladatként azt kapták, hogy az aktuális kódcsipet mintájára valósítsák meg azt gép mellett, hogy
+                                négy katona harcoljon, a negyedik az addigi győztessel! Íme az első próbálkozásuk
+                            </para>
+                            <programlisting language="C++">
+<![CDATA[int main()
+{
+    Katona en{"Nandi", 100, 10};
+    Katona ellen{"Barbar", 80, 5};
+    Katona giant{"Giant",180,20};
+    Katona negyedik{"MATYI",500,300};
+
+    std::cout << harcol(harcol(en,ellen, )harmadik)negyedik) << std::endl;
+}]]>
+                            </programlisting>
+                            <para>
+                                ami nyilván nem fordul le, hiszen teljesen rossz helyre tették a vesszőket:
+                            </para>
+                            <screen>
+<![CDATA[$ g++ nandi4.cpp -o nandi4 -std=c++11
+^[[Anandi4.cpp: In function ‘int main()’:
+nandi4.cpp:59:42: error: expected primary-expression before ‘)’ token
+     std::cout << harcol(harcol(en,ellen, )harmadik)negyedik) << std::endl;]]>
+                            </screen>
+                            <para>
+                                Ezt a hibát gyorsan ki tudták javítani
+                            </para>
+
+                            <programlisting language="C++">
+<![CDATA[
+    Katona en{"Nandi", 100, 10};
+    Katona ellen{"Barbar", 80, 5};
+    Katona giant{"Giant",180,20};
+    Katona negyedik{"MATYI",500,300};
+
+    std::cout << harcol(harcol(en,ellen ),harmadik),negyedik) << std::endl;
+]]>
+                            </programlisting>
+                            <para>
+                                amivel már egy beszédes fordítási hibát kaptak:
+                            </para>
+                            <screen>
+<![CDATA[$ g++ nandi4.cpp -o nandi4 -std=c++11
+nandi4.cpp: In function ‘int main()’:
+nandi4.cpp:59:50: error: ‘harmadik’ was not declared in this scope
+     std::cout << harcol(harcol(harcol(en,ellen ),harmadik),negyedik) << std::en]]>
+                            </screen>
+                            <para>
+                                mivel ők a tegnapi kódjukból indultak ki, ahol nem volt <varname>harmadik</varname> nevű referencia, hanem a
+                                <varname>giant</varname> nevet használták helyette, ennek megfelelően módosítottak:
+                            </para>
+
+                            <programlisting language="C++">
+<![CDATA[$ g++ nandi4.cpp -o nandi4 -std=c++11
+nandi4.cpp: In function ‘int main()’:
+nandi4.cpp:74:61: error: expected ‘;’ before ‘)’ token
+     std::cout << harcol(harcol(en,ellen ),harmadik),negyedik) << std::endl;
+]]>
+                            </programlisting>
+                            <para>
+                                de még ez sem hozott sikert
+                            </para>
+                            <screen>
+<![CDATA[$ g++ nandi4.cpp -o nandi4 -std=c++11
+nandi4.cpp: In function ‘int main()’:
+nandi4.cpp:74:61: error: expected ‘;’ before ‘)’ token
+     std::cout << harcol(harcol(en,ellen ),harmadik),negyedik) << std::endl;
+]]>
+                            </screen>
+                            <para>
+                                hiszen három bezáró kerekzárójel van és csak kettő nyitó! A hány harcot akartok? segítő kérdés segített, mert hármat akarnak,
+                                de csak kér harcol függényhívás van, a helyét megtanácskozva betették a harmadikat:
+                            </para>
+
+                            <programlisting language="C++">
+<![CDATA[    std::cout << harcol(harcol(harcol(en,ellen ),harmadik),negyedik) << std::endl;]]>
+                            </programlisting>
+                            <para>
+                                ami már egy jó működést produkált:
+                            </para>
+                            <screen>
+<![CDATA[$ ./nandi4
+Nandi 95 10
+Barbar 70 5
+Nandi 90 10
+Barbar 60 5
+Nandi 85 10
+Barbar 50 5
+Nandi 80 10
+Barbar 40 5
+Nandi 75 10
+Barbar 30 5
+Nandi 70 10
+Barbar 20 5
+Nandi 65 10
+Barbar 10 5
+Nandi 60 10
+Barbar 0 5
+Nandi 40 10
+Giant 170 20
+Nandi 20 10
+Giant 160 20
+Nandi 0 10
+Giant 150 20
+Giant -150 20
+MATYI 480 300
+MATYI 480 300
+]]>
+                            </screen>
+                            <para>
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                    <section>
+                        <title>A gyerekek által kiírt feladatok</title>
+                        <para>
+                        </para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    Gréta: három katona bajnokságot csapott. Egyik Gréta, élete 400, sebzése 300.
+                                    Másik Nándi, élete 100, sebzése 10. Harmadik Matyi, élete 100, sebzése 5. A
+                                    feladat, hogy ezt programozd be!
+                                </para>
+                                <para>
+                                    Másik feladat, hogy csinálj három katonát és adj nekik adatokat, például élet, sebzés. Az olvasó akármilyen
+                                    számot írhat be, ha csinálja.
+                                </para>
+                                <para>
+                                    Másik feladat, hogy amikor a katonák harcolnak és ha valamelyik győz, akkor újra megkapja az életét.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    Nándi: a feladat az, hogy csinálj két katonát és utána csinálj velük csatát! Csinálj pontos adatokat, az életét, a
+                                    sebzését, a nevét te találhatod ki.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    Matyi: a feladat az, hogy csináljunk egy kupát! Úgy, hogy Nándi meg Barbár, Giant és Matyi harcoljon egymással.
+                                    A győztesek két csatát játszanak. Egyil csata győztese vs. Robbantó, a másik győztes vs. Varázsló. Utána a két győztes
+                                    harcol egymással.
+                                </para>
+                                <itemizedlist>
+                                    <listitem>
+                                        <para>Nándi: {élete: 100, sebzése 10}
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>Matyi: {élete: 500, sebzése 200}
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>Giant: {élete: 180, sebzése 20}
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>Barbár: {élete: 80, sebzése 5}
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>Robbantó: {élete: 25, sebzése 25}
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>Varázsló: {élete: 60, sebzése 40}
+                                        </para>
+                                    </listitem>
+                                </itemizedlist>
+                            </listitem>
+                        </itemizedlist>
+                    </section>
+
+                </section>
+
+            </section>
+
+            <section>
+                <title>Ötödik nap &#x2013; veszélyes vizeken</title>
+                <para>
+                    Alakítsuk át kicsit a <filename>nandi4.cpp</filename> forrást: tegyünk bele némi nyomkövetést, azaz olyan kiírásokat a
+                    képernyőre, amik segítenek látni, mi történik a programban.
+                </para>
+                <programlisting language="C++" linenumbering="numbered">
+<![CDATA[#include <iostream>
+
+class Katona
+{
+public:
+    std::string nev;
+    int elet;
+    int sebzes;
+
+    Katona(std::string nev, int elet, int sebzes) {
+
+        this->nev = nev;
+        this->elet = elet;
+        this->sebzes = sebzes;
+    }
+
+    bool el() {
+        return elet > 0;
+    }
+
+    friend std::ostream &operator<< (std::ostream &stream, Katona &katona) {
+        stream << katona.nev << " " << katona.elet << " " << katona.sebzes;
+        return stream;
+    }
+
+};
+
+
+Katona &harcol(Katona &egyik, Katona &masik)
+{
+    std::cout << "harcol fgv: harc indul, " << egyik << " vs. " << masik << std::endl;
+
+    for (; egyik.el() && masik.el() ;) {
+
+        egyik.elet = egyik.elet - masik.sebzes;
+        masik.elet = masik.elet - egyik.sebzes;
+
+        std::cout << "harcol fgv: " << egyik << std::endl;
+        std::cout << "harcol fgv: " << masik << std::endl;
+
+    }
+
+    if (egyik.elet > masik.elet)
+        return egyik;
+    else
+        return masik;
+}
+
+
+int main()
+{
+
+    Katona en {"Nandi", 100, 10};
+    Katona ellen {"Barbar", 80, 5};
+    Katona harmadik {"Giant", 180, 20};
+
+    std::cout << "main fgv: " << harcol(harcol(en, ellen), harcol(en, harmadik)) << std::endl;
+
+    return 0;
+}]]>
+                </programlisting>
+                <section>
+                    <title>Apa &#x2013; mentor</title>
+
+
+                    <para>
+                        Mire számítunk? Az <literal>en</literal> katona objektum (<literal>Nandi</literal>) lenyomja az
+                        <literal>ellen</literal> katona objektumot (a <literal>Barbar</literal>-t). A <literal>harmadik</literal> katona objektum
+                        (<literal>Giant</literal>) lenyomja az <literal>en</literal> objektumot, majd a két győztes:
+                        <literal>en</literal> és <literal>harmadik</literal> játszik, ahol <literal>harmadik</literal> nyer.
+                    </para>
+                    <screen>
+<![CDATA[$ g++ nandi5.cpp -o nandi5 -std=c++11
+$ ./nandi5
+harcol fgv: harc indul, Nandi 100 10 vs. Giant 180 20
+harcol fgv: Nandi 80 10
+harcol fgv: Giant 170 20
+harcol fgv: Nandi 60 10
+harcol fgv: Giant 160 20
+harcol fgv: Nandi 40 10
+harcol fgv: Giant 150 20
+harcol fgv: Nandi 20 10
+harcol fgv: Giant 140 20
+harcol fgv: Nandi 0 10
+harcol fgv: Giant 130 20
+harcol fgv: harc indul, Nandi 0 10 vs. Barbar 80 5
+harcol fgv: harc indul, Barbar 80 5 vs. Giant 130 20
+harcol fgv: Barbar 60 5
+harcol fgv: Giant 125 20
+harcol fgv: Barbar 40 5
+harcol fgv: Giant 120 20
+harcol fgv: Barbar 20 5
+harcol fgv: Giant 115 20
+harcol fgv: Barbar 0 5
+harcol fgv: Giant 110 20
+main fgv: Giant 110 20
+]]>
+                    </screen>
+                    <para>
+                        Ezzel szemben mit mutatnak a nyomkövető üzenetek, mi is történt? A <literal>harmadik</literal> katona objektum
+                        (<literal>Giant</literal>) lenyomja az <literal>en</literal> (<literal>Nandi</literal>) objektumot. Aztán a már meggyengült
+                        <literal>en</literal> katona objektumot (<literal>Nandi</literal>-t) lenyomja az <literal>ellen</literal> objektum (a <literal>Barbar</literal>).
+                        Majd a két győztes: <literal>ellen</literal> és <literal>harmadik</literal> játszik, ahol <literal>harmadik</literal> nyer.
+                        Hát nem pontosan erre számítottunk, ugye?
+                    </para>
+                    <para>
+                        A magyarázat: mi feltettük amikor fejben játszottuk le, hogy először a
+                        <code>harcol(en, ellen)</code> játszódik le, majd a
+                        <code>harcol(en, harmadik)</code> és végül a két győztes játszik. Lehet van olyan gép, ahol ez pont így lenne, viszont az enyémen pont nem így lett!
+                        Ez azért van, mert a C++ nyelv nem határozza meg a függvényhívás bemenő paramétereinek kiértékelési sorrendjét. Esetünkben, hogy a külső
+                        harcol föggvény a jobb oldali vagy a bal oldali harcol hívás végrehajtásával kezdődik-e. Mivel nincs meghatározva az egyik gépen lehet így lesz,
+                        a másikon meg máshogy. Ezért hajózunk máris veszélyes vizeken. Mit tehet a programozó? Mit kell tennie a programozónak? El kell kerülnie
+                        az olyan források írását, amelyekben ilyen szituk előfordulnak. Erre több lehetőség is adódik, hogy a programozó melyikkel él, az majd stílus
+                        kérdése lesz. Most elég annyit tudni, hogy a C++ nem a homokozó (mert például a Java vagy a C sharp az) abban az értelemben, hogy a
+                        programozó nemcsak pontosan tudhatja, mi történik programja hatására a memóriában a program objektumaival, hanem pontosan tudnia is kell!
+                    </para>
+                    <para>
+                        Olvashatóbb is lesz a kód, ha a függvényhívásokat kivesszük a függvényhívásból, azaz ezt írjuk:
+                    </para>
+                    <programlisting language="C++">
+<![CDATA[int main()
+{
+
+    Katona en {"Nandi", 100, 10};
+    Katona ellen {"Barbar", 80, 5};
+    Katona harmadik {"Giant", 180, 20};
+
+    Katona egyikGyoztes = harcol(en, ellen);
+    Katona masikGyoztes = harcol(en, harmadik);
+
+    std::cout << "main fgv: " << harcol(egyikGyoztes, masikGyoztes) << std::endl;
+
+    return 0;
+}]]>
+                    </programlisting>
+                    <para>
+                        Itt már egyértelműen van leírva C++ nyelven, hogy mit szeretne a programozó, de sajnos még mindig nem az történik:
+                    </para>
+                    <screen>
+<![CDATA[harcol fgv: harc indul, Nandi 100 10 vs. Barbar 80 5
+harcol fgv: Nandi 95 10
+harcol fgv: Barbar 70 5
+harcol fgv: Nandi 90 10
+harcol fgv: Barbar 60 5
+harcol fgv: Nandi 85 10
+harcol fgv: Barbar 50 5
+harcol fgv: Nandi 80 10
+harcol fgv: Barbar 40 5
+harcol fgv: Nandi 75 10
+harcol fgv: Barbar 30 5
+harcol fgv: Nandi 70 10
+harcol fgv: Barbar 20 5
+harcol fgv: Nandi 65 10
+harcol fgv: Barbar 10 5
+harcol fgv: Nandi 60 10
+harcol fgv: Barbar 0 5
+harcol fgv: harc indul, Nandi 60 10 vs. Giant 180 20
+harcol fgv: Nandi 40 10
+harcol fgv: Giant 170 20
+harcol fgv: Nandi 20 10
+harcol fgv: Giant 160 20
+harcol fgv: Nandi 0 10
+harcol fgv: Giant 150 20
+harcol fgv: harc indul, Nandi 60 10 vs. Giant 150 20
+harcol fgv: Nandi 40 10
+harcol fgv: Giant 140 20
+harcol fgv: Nandi 20 10
+harcol fgv: Giant 130 20
+harcol fgv: Nandi 0 10
+harcol fgv: Giant 120 20
+main fgv: Giant 120 20
+]]>
+                    </screen>
+
+                    <para>
+                        Mert hogy lehet, hogy a harmadik csatában a <literal>Nandi</literal> élete megint 60 mikor előtte már lement nullára!
+                        Lássunk hát már egy jó megoldást, egyetlen és jelet tegyünk a Katona osztály után:
+                    </para>
+
+                    <programlisting language="C++">
+<![CDATA[    Katona& egyikGyoztes = harcol(en, ellen);
+    Katona& masikGyoztes = harcol(en, harmadik);]]>
+                    </programlisting>
+                    <para>
+                        és lássunk csodát:
+                    </para>
+                    <screen>
+<![CDATA[harcol fgv: harc indul, Nandi 100 10 vs. Barbar 80 5
+harcol fgv: Nandi 95 10
+harcol fgv: Barbar 70 5
+harcol fgv: Nandi 90 10
+harcol fgv: Barbar 60 5
+harcol fgv: Nandi 85 10
+harcol fgv: Barbar 50 5
+harcol fgv: Nandi 80 10
+harcol fgv: Barbar 40 5
+harcol fgv: Nandi 75 10
+harcol fgv: Barbar 30 5
+harcol fgv: Nandi 70 10
+harcol fgv: Barbar 20 5
+harcol fgv: Nandi 65 10
+harcol fgv: Barbar 10 5
+harcol fgv: Nandi 60 10
+harcol fgv: Barbar 0 5
+harcol fgv: harc indul, Nandi 60 10 vs. Giant 180 20
+harcol fgv: Nandi 40 10
+harcol fgv: Giant 170 20
+harcol fgv: Nandi 20 10
+harcol fgv: Giant 160 20
+harcol fgv: Nandi 0 10
+harcol fgv: Giant 150 20
+harcol fgv: harc indul, Nandi 0 10 vs. Giant 150 20
+main fgv: Giant 150 20]]>
+                    </screen>
+                    <para>
+                        végre az történik amit a programozó elképzelt!
+                    </para>
+                    <para>
+                        Ezzel a változattal a gyerekek szabad stílusban (spontán) kezdtek el játszani:
+                    </para>
+                    <programlisting language="C++">
+<![CDATA[    Katona en {"Matyi", 1000, 100};
+    Katona ellen {"Greta", 800, 50};
+    Katona harmadik {"Nandi", 800, 50};
+
+    Katona &egyikGyoztes = harcol(en, ellen);
+    Katona &masikGyoztes = harcol(en, harmadik);
+
+    std::cout << "main fgv: " << harcol(egyikGyoztes, masikGyoztes) << std::endl;]]>
+                    </programlisting>
+
+                    <screen>
+<![CDATA[harcol fgv: harc indul, Matyi 1000 100 vs. Greta 800 50
+harcol fgv: Matyi 950 100
+harcol fgv: Greta 700 50
+harcol fgv: Matyi 900 100
+harcol fgv: Greta 600 50
+harcol fgv: Matyi 850 100
+harcol fgv: Greta 500 50
+harcol fgv: Matyi 800 100
+harcol fgv: Greta 400 50
+harcol fgv: Matyi 750 100
+harcol fgv: Greta 300 50
+harcol fgv: Matyi 700 100
+harcol fgv: Greta 200 50
+harcol fgv: Matyi 650 100
+harcol fgv: Greta 100 50
+harcol fgv: Matyi 600 100
+harcol fgv: Greta 0 50
+harcol fgv: harc indul, Matyi 600 100 vs. Nandi 800 50
+harcol fgv: Matyi 550 100
+harcol fgv: Nandi 700 50
+harcol fgv: Matyi 500 100
+harcol fgv: Nandi 600 50
+harcol fgv: Matyi 450 100
+harcol fgv: Nandi 500 50
+harcol fgv: Matyi 400 100
+harcol fgv: Nandi 400 50
+harcol fgv: Matyi 350 100
+harcol fgv: Nandi 300 50
+harcol fgv: Matyi 300 100
+harcol fgv: Nandi 200 50
+harcol fgv: Matyi 250 100
+harcol fgv: Nandi 100 50
+harcol fgv: Matyi 200 100
+harcol fgv: Nandi 0 50
+harcol fgv: harc indul, Matyi 200 100 vs. Matyi 200 100
+harcol fgv: Matyi 0 100
+harcol fgv: Matyi 0 100
+main fgv: Matyi 0 100]]>
+                    </screen>
+
+                    <para>
+                        De Matyi nem akarta, hogy a végén a <literal>Matyi</literal> név-tulajdonságú objektum önmagával harcoljon... a következő
+                        próbálkozásaik arról szóltak, hogy a végén a <literal>Matyi</literal> objektum győzzön, de ne magával harcoljon. Próbálkozást
+                        próbálkozás követett, de a többiek örömére egyszer a <literal>Gréta</literal>, máskor a <literal>Nándi</literal> objektum győzött,
+                        s persze párszor visszaköszönt a <literal>Matyi</literal> önmagával való harca is, mire belátta, hogy vannak olyan feladatok, amelyek
+                        megadott keretek között megoldhatatlanok. (Mert ha az első meccset Matyi elveszti, akkor a másodikba már nem élve megy, így nem kerül a döntőbe.
+                        Ha ez nem teljesül, azaz az elsőt nyeri, de a másodikat bukja, akkor a döntőbe kerül már eleve nem élve.)
+                    </para>
+
+                    <programlisting language="C++">
+<![CDATA[]]>
+                    </programlisting>
+
+                    <screen>
+<![CDATA[]]>
+                    </screen>
+
+
+
+                    <programlisting language="C++">
+<![CDATA[]]>
+                    </programlisting>
+
+                    <screen>
+<![CDATA[]]>
+                    </screen>
+
+
+                    <para>
+                        Elevenítsük fel a következő pontban az egyik Gréta által bedobott feladatot!
+                    </para>
+                </section>
+                <section>
+                    <title>Gréta, Nándi, Matyi</title>
+                    <blockquote>
+                        <attribution>Gréta</attribution>
+                        <para>
+                            &#x201E;Másik feladat, hogy amikor a katonák harcolnak és ha valamelyik győz, akkor újra megkapja az életét.&#x201D;</para>
+                    </blockquote>
+                    <para>
+                    </para>
+                </section>
+
+            </section>
+
+            <section>
+                <title>Hatodik nap &#x2013; másoló konstruktor</title>
+                <para>
+
+                </para>
+                <programlisting language="C++" linenumbering="numbered">
+<![CDATA[]]>
+                </programlisting>
+                <section>
+                    <title>Apa &#x2013; mentor</title>
+                    <para>
+
+                    </para>
+                    <screen>
+<![CDATA[]]>
+                    </screen>
+                </section>
+
+                <section>
+                    <title>Gréta</title>
+                    <para>
+
+                    </para>
+                </section>
+                <section>
+                    <title>Nándi</title>
+                    <para>
+
+                    </para>
+                </section>
+                <section>
+                    <title>Matyi</title>
+                    <para>
+                    </para>
+                </section>
+
+            </section>
+
+        </section>
+
+    </chapter>
+
+</part>
