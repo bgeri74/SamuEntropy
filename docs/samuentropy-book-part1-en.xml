@@ -703,21 +703,21 @@ int main()
                     <section>
                         <title>Matyi</title>
                         <para>
-                            Az <code>i*i</code> remek 5let, de nem kellett volna semmi más ezen túl
+                            The <code>i*i</code> is a great idea, but it was enough
                         </para>
                         <programlisting language="C++">
 <![CDATA[#include <iostream>
 
 int main()
 {  int i=1<i<11;
-    std::cout << "MATYI SZORZOTABLA" << std::endl;
+    std::cout << "MATYI MULTIPLICATION TABLE" << std::endl;
     for(int i=1<;  i<11 ; ++i)
         std::cout << i <<" * "<<i<<"=" <<i*i<< std::endl;
     return 0;
 }]]>
                         </programlisting>
                         <para>
-                            mert ez így szintaktikailag hibás
+                            because this yields a syntactic error.
                         </para>
                         <screen>
 <![CDATA[matyi2.cpp:6:17: error: expected primary-expression before ‘;’ token
@@ -725,12 +725,13 @@ int main()
 ]]>
                         </screen>
                         <para>
-                            a for i ciklusváltozójába becsúszott egy felesleges karakter, illetve a
-                            <code><![CDATA[int i=1<i<11;]]></code> értelmezhetetlen a program szempontjából.
+                            There is an unnecessary character in the first part of the for loop declaration,
+                            furthermore the program cannot understand the
+                            <code><![CDATA[int i=1<i<11;]]></code> statement.
                         </para>
                         <para>
-                            Eztán a Nándinál már ismertetett irányba oldotta meg a feladatot, s Ő is kimaxolta ezt is a ciklus felső határának feltolásával.
-                            Ez egy idő után persze túlcsorduláshoz vezetett, amit abból éreztek gyanúsnak, hogy negatív számok jelentek meg a szorzatban.
+                            After this, he solved the task in a way mentioned earlier regarding Nándi, and he maxed out too this loop with pushing the upper limits higher.
+                            Of course, after some time this lead to overflow, which they could notice from the negative numbers in the multiplications.
                         </para>
                         <screen>
 <![CDATA[.
@@ -755,65 +756,65 @@ int main()
             </section>
 
             <section>
-                <title>Negyedik nap &#x2013; osztály</title>
+                <title>Fourth day &#x2013; class</title>
                 <para>
 
                 </para>
                 <programlisting language="C++" linenumbering="numbered">
 <![CDATA[#include <iostream>
 
-class Katona
+class Soldier
 {
 public:
-    std::string nev;
-    int elet;
-    int sebzes;
+    std::string name;
+    int life;
+    int damage;
 
-    Katona(std::string nev, int elet, int sebzes) {
+    Soldier(std::string name, int life, int damage) {
 
-        this->nev = nev;
-        this->elet = elet;
-        this->sebzes = sebzes;
+        this->name = name;
+        this->life = life;
+        this->damage = damage;
     }
 
-    bool el() {
-        return elet > 0;
+    bool lives() {
+        return life > 0;
     }
 
-    friend std::ostream &operator<< (std::ostream &stream, Katona &katona) {
-        stream << katona.nev << " " << katona.elet << " " << katona.sebzes;
+    friend std::ostream &operator<< (std::ostream &stream, Soldier &soldier) {
+        stream << soldier.name << " " << soldier.life << " " << soldier.damage;
         return stream;
     }
 
 };
 
 
-Katona &harcol(Katona &egyik, Katona &masik)
+Soldier &fight(Soldier &first, Soldier &second)
 {
-    for (; egyik.el() && masik.el() ;) {
-        egyik.elet = egyik.elet - masik.sebzes;
-        masik.elet = masik.elet - egyik.sebzes;
+    for (; first.lives() && second.lives() ;) {
+        first.life = first.life - second.damage;
+        second.life = second.life - first.damage;
     }
 
-    if (egyik.elet > masik.elet)
-        return egyik;
+    if (first.life > second.life)
+        return first;
     else
-        return masik;
+        return second;
 }
 
 
 int main()
 {
-    Katona en {"Nandi", 100, 10};
-    Katona ellen {"Barbar", 80, 5};
+    Soldier me {"Nandi", 100, 10};
+    Soldier enemy {"Barbarian", 80, 5};
 
-    std::cout << harcol(en, ellen) << std::endl;
+    std::cout << fight(me, enemy) << std::endl;
 
     return 0;
 }]]>
                 </programlisting>
                 <section>
-                    <title>Apa &#x2013; mentor</title>
+                    <title>Dad &#x2013; mentor</title>
                     <para>
 
                     </para>
@@ -839,26 +840,26 @@ Nandi 60 10
                 <section>
                     <title>Matyi</title>
                     <para>
-                        A class az egy osztály. Az osztály az adatok és függvények csoportja.
-                        Milye van egy katonának? Élete, sebzése és neve.
+                        The class is a class. The class is a group of data and functions.
+                        What does a soldier have? Life, damage and name.
                     </para>
                     <para>
-                        Mikor él egy katona? Amikor az élete több mint 0. Ezt az <function>el</function> függvény mondja el.
-                        Az <function>el</function> függvény visszaadja a hívójának, hogy igaz-e, hogy él-e a katona.
+                        When does a soldier live? When his/her life is more than 0. The <function>lives</function> function gives information about this.
+                        The <function>lives</function> function tells whether the soldier lives or not to its caller.
                     </para>
                     <para>
-                        Van több csatorna. Az egyik csatorna neve: iostream a másiknak ostream.
+                        There are more channels. The name of one of these is: iostream and an other one is the ostream.
                     </para>
                     <para>
-                        Mennyi az élete és a sebzése egy katonának?
-                        Nándinak az élete 100 és a sebzése 10.
-                        A Barbárnak az élete 80 és a sebzése 5.
-                        Ezeket a konstruktornak adjuk mag.
-                        A konstruktorról akkor beszélünk ha az osztály és a függvény neve meggegyezik.
+                        How many lives and how much damage does a soldier have?
+                        Nándi's life is 100 and his damage is 10.
+                        The Barbarian has 80 life and 5 damage.
+                        We give these to the constructor.
+                        We talk about a constructor when the name of the function and the class is the same.
                     </para>
                     <para>
-                        A végén a győztes katona nevét kiírjuk a csatornára.
-                        A return visszaad egy számot az operációs rendszernek.
+                        Finally, we print the name of the winner soldier to the channel.
+                        The return returns a number to the operating system.
                     </para>
                 </section>
 
